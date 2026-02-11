@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffb6c1;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        .glass-card {
+            background: #ffe4e1;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            min-height: 500px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .gif-container {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            background-color: #fce4ec; /* Fallback color while loading */
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+
+        .btn-group {
+            width: 100%;
+            height: 150px; /* Bigger area for the No button to jump */
+            position: relative;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: absolute;
+        }
+
+        #yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            left: 50px;
+            top: 0;
+            z-index: 10;
+        }
+
+        #no-btn {
+            background-color: #fff;
+            color: #ff4d6d;
+            right: 50px;
+            top: 0;
+            z-index: 5;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="question-section" class="glass-card">
+        <div class="gif-container">
+            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHVzcXo3Mjd2MTIzeHN3aGVjcXpzdXF2ajc1bmNiem94amNwdnJ1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/lPM06f2zvk94jBAzlP/giphy.gif" alt="Cute Cat">
+        </div>
+        <h1>Dear tiểu thư Vàng Ong,</h1>
+        <h2>Will you 🐝 my Valentine? 🌹</h2>
+        <div class="btn-group">
+            <button id="yes-btn">Yes!</button>
+            <button id="no-btn">No</button>
+        </div>
+    </div>
+
+    <div id="success-section" class="glass-card hidden">
+        <div class="gif-container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTJteWViZmVycnpjM2ZtMnFqbGFidWJrNDhpbmNhNmNoMTRrNDhyciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/SvvfK2dco188Wk4ZTq/giphy.gif" alt="Success!">
+        </div>
+        <h1>Yeeeeeeeeeeeeeeee ❤️✨</h1>
+        <p style="color: #d63384; font-weight: bold;">I knew you'd say yes!</p>
+        <p>Làm sao mà từ chối được muahahahahaha</p>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const questionSection = document.getElementById('question-section');
+        const successSection = document.getElementById('success-section');
+        const mainGif = document.getElementById('main-gif');
+        const btnGroup = document.querySelector('.btn-group');
+
+        noBtn.addEventListener('click', () => {
+            
+            // 2. Teleport ONLY within the button group area
+            const groupWidth = btnGroup.clientWidth;
+            const groupHeight = btnGroup.clientHeight;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            const newX = Math.floor(Math.random() * (groupWidth - btnWidth));
+            const newY = Math.floor(Math.random() * (groupHeight - btnHeight));
+
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            
+            // 3. Make Yes button grow
+            const currentScale = yesBtn.style.transform ? parseFloat(yesBtn.style.transform.replace('scale(', '')) : 1;
+            yesBtn.style.transform = `scale(${currentScale + 0.3})`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            questionSection.classList.add('hidden');
+            successSection.classList.remove('hidden');
+            
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ff758f', '#ff8fa3']
+            });
+        });
+    </script>
+</body>
+</html>
